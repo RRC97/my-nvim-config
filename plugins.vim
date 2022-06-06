@@ -14,4 +14,6 @@ call plug#begin()
 	Plug 'vim-airline/vim-airline-themes'
 	" DevIcons
 	Plug 'ryanoasis/vim-devicons'
+	" Auto Pairs
+	Plug 'jiangmiao/auto-pairs'
 call plug#end()
