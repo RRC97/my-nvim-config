@@ -5,9 +5,6 @@ vim.g.loaded_netrwPlugin = 1
 -- optionally enable 24-bit colour
 vim.opt.termguicolors = true
 
--- empty setup using defaults
-require("nvim-tree").setup()
-
 vim.keymap.set("n", "<leader>e", vim.cmd.NvimTreeOpen)
 vim.keymap.set("n", "<leader>b", vim.cmd.NvimTreeToggle)
 vim.keymap.set("n", "<leader>q", "<cmd>tabclose<CR>", { desc = "Fechar tab atual" })
@@ -36,8 +33,6 @@ local function on_attach(bufnr)
     local node = api.tree.get_node_under_cursor()
     if node and not node.nodes then -- verifica se não é diretório
       vim.cmd("tabnew " .. vim.fn.fnameescape(node.absolute_path))
-      api.tree.open()
-      vim.cmd("wincmd p")
     end
   end, opts("abrir arquivo em nova tab"))
 
@@ -49,10 +44,15 @@ end
 
 require("nvim-tree").setup({
   on_attach = on_attach,
+  update_focused_file = { enable = true },
 })
 
-
-
+vim.api.nvim_create_autocmd("TabNewEntered", {
+  callback = function()
+    require("nvim-tree.api").tree.open()
+    vim.cmd("wincmd p")
+  end,
+})
 
 -- OR setup with some options
 -- require("nvim-tree").setup({
