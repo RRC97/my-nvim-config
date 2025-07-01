@@ -13,25 +13,88 @@ lspconfig_defaults.capabilities = vim.tbl_deep_extend(
 
 -- This is where you enable features that only work
 
+
 -- if there is a language server active in the file
 vim.api.nvim_create_autocmd('LspAttach', {
   desc = 'LSP actions',
   callback = function(event)
-    local opts = {buffer = event.buf}
+    local opts = { buffer = event.buf }
 
     vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
     vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
     vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
     vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
     vim.keymap.set('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
-    vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
+    vim.keymap.set('n', 'gr', function() 
+      vim.lsp.buf.references()
+      vim.cmd("copen")
+    end, opts)
     vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
+    vim.keymap.set('n', 'gh', '<cmd>lua vim.diagnostic.open_float()<cr>', opts)
     vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
-    vim.keymap.set({'n', 'x'}, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
+    vim.keymap.set({ 'n', 'x' }, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
     vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
   end,
 })
-vim.opt.signcolumn = 'yes'
+
+require('lspconfig').lua_ls.setup({})
+require('lspconfig').ts_ls.setup({
+  on_attach = function(client, bufnr)
+    -- Configura o ts-utils para este cliente
+    local ts_utils = require("nvim-lsp-ts-utils")
+    ts_utils.setup({
+      debug = false,
+      enable_import_on_completion = true,
+      -- outras configurações se quiser
+    })
+
+    ts_utils.setup_client(client)
+
+    -- Mapas úteis
+    local opts = { noremap = true, silent = true, buffer = bufnr }
+
+    -- Organizar imports
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>oi", ":TSLspOrganize<CR>", opts)
+    -- Importar todos imports faltantes
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>ia", ":TSLspImportAll<CR>", opts)
+    -- Importar o símbolo sob o cursor
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>ic", ":TSLspImportCurrent<CR>", opts)
+  end,
+})
+
+local cmp = require('cmp')
+
+cmp.setup({
+  sources = {
+    { name = 'nvim_lsp' },
+  },
+  snippet = {
+    expand = function(args)
+      -- You need Neovim v0.10 to use vim.snippet
+      vim.snippet.expand(args.body)
+    end,
+  },
+  mapping = cmp.mapping.preset.insert({
+    ["<C-j>"] = cmp.mapping.select_next_item(),
+    ["<C-k>"] = cmp.mapping.select_prev_item(),
+    ["<CR>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.confirm({ select = true })
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
+
+
+    ["<C-space>"] = cmp.mapping.complete(),
+  }),
+
+  sources = {
+    { name = "nvim_lsp" },
+    { name = "luasnip" },
+    { name = "buffer" },
+  },
+})
 
 require('mason').setup({})
 require('mason-lspconfig').setup({
@@ -41,3 +104,7 @@ require('mason-lspconfig').setup({
     end,
   },
 })
+
+vim.keymap.set("n", "<leader>=", function()
+  vim.lsp.buf.format()
+end, { desc = "Formatar arquivo com LSP" })
