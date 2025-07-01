@@ -6,7 +6,7 @@ vim.g.loaded_netrwPlugin = 1
 vim.opt.termguicolors = true
 
 vim.keymap.set("n", "<leader>e", vim.cmd.NvimTreeOpen)
-vim.keymap.set("n", "<leader>b", vim.cmd.NvimTreeToggle)
+-- vim.keymap.set("n", "<leader>b", vim.cmd.NvimTreeToggle)
 vim.keymap.set("n", "<leader>q", "<cmd>tabclose<CR>", { desc = "Fechar tab atual" })
 
 -- vim.api.nvim_create_autocmd("TabNewEntered", {
