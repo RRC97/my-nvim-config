@@ -41,6 +41,9 @@ vim.keymap.set('n', '<C-c>', '"+yy', { noremap = true, silent = true })
 -- Visual mode: copiar seleção para clipboard
 vim.keymap.set('x', '<C-c>', '"+y', { noremap = true, silent = true })
 
+-- Insert mode: colar do clipboard
+vim.keymap.set('i', '<C-v>', '<C-o>"+p', { noremap = true, silent = true })
+
 vim.keymap.set("n", "<leader>rn", function()
   vim.o.relativenumber = not vim.o.relativenumber
 end, { desc = "Toggle relative number" })
