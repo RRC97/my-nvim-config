@@ -3,9 +3,6 @@ vim.keymap.set('n', '<leader>gl', '<cmd>Gllog --stat --pretty=format:"[%ad] %h -
 vim.keymap.set('n', '<leader>gc', '<cmd>Gclog! | wincmd p<CR>', { silent = true })
 vim.keymap.set('n', '<leader>gd', '<cmd>Gdiff<CR>', { silent = true })
 vim.keymap.set('n', '<leader>gD', '<cmd>Gvdiffsplit<CR>', { silent = true })
-vim.keymap.set('n', '<leader>gC', '<cmd>Git commit<CR>', { silent = true })
-vim.keymap.set('n', '<leader>gP', '<cmd>Git push<CR>', { silent = true })
-vim.keymap.set('n', '<leader>gp', '<cmd>Git pull<CR>', { silent = true })
 -- Fugitive key mappings
 
 -- Próximo commit no Gdiff

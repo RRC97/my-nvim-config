@@ -13,6 +13,9 @@ vim.keymap.set('n', 'ZX', ':wqa<CR>', { desc = 'Salvar tudo e sair' })
 
 vim.keymap.set('n', '<C-j>', ':bnext<CR>', { desc = 'Buffer next' })
 vim.keymap.set('n', '<C-k>', ':bprevious<CR>', { desc = 'Buffer previous' })
+vim.keymap.set("n", "<leader>qc", ":bd<CR>", { desc = "Quit" })
+vim.keymap.set("n", "<leader>qa", ":bufdo bd<CR>", { desc = "Quit all" })
+vim.keymap.set("n", "<leader>qo", ":only<CR>", { desc = "Quit other windows" })
 
 vim.keymap.set("n", "<leader>bn", ":bnext<CR>", { desc = "Next buffer" })
 vim.keymap.set("n", "<leader>bp", ":bprevious<CR>", { desc = "Previous buffer" })
