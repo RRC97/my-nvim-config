@@ -7,6 +7,7 @@ vim.keymap.set("n", "N", "Nzzzv")
 
 -- ZZ → sair sem salvar (como :qa)
 vim.keymap.set('n', 'ZZ', ':qa<CR>', { desc = 'Fechar tudo sem salvar' })
+vim.keymap.set('n', 'ZQ', ':qa!<CR>', { desc = 'Fechar tudo sem salvar' })
 
 -- ZX → salva tudo e sai (como :wa | qa)
 vim.keymap.set('n', 'ZX', ':wqa<CR>', { desc = 'Salvar tudo e sair' })
@@ -22,6 +23,12 @@ vim.keymap.set("n", "<leader>bo", ":only<CR>", { desc = "Quit other windows" })
 
 vim.keymap.set("n", "<leader>cn", "<cmd>cnext<CR>zz")
 vim.keymap.set("n", "<leader>cp", "<cmd>cprev<CR>zz")
+vim.keymap.set("n", "<leader>cq", function()
+  vim.diagnostic.setqflist()
+  vim.cmd("copen") -- já abre o quickfix automaticamente
+  vim.cmd("wincmd p") -- volta para o buffer anterior
+end, { desc = "Abrir quickfix com diagnostics" })
+
 vim.keymap.set("n", "<leader>ln", "<cmd>lnext<CR>zz")
 vim.keymap.set("n", "<leader>lp", "<cmd>lprev<CR>zz")
 
