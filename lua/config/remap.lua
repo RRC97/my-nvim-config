@@ -1,5 +1,10 @@
 vim.g.mapleader = " "
 
+vim.keymap.set("n", "<C-d>", "<C-d>zz")
+vim.keymap.set("n", "<C-u>", "<C-u>zz")
+vim.keymap.set("n", "n", "nzzzv")
+vim.keymap.set("n", "N", "Nzzzv")
+
 -- ZZ → sair sem salvar (como :qa)
 vim.keymap.set('n', 'ZZ', ':qa<CR>', { desc = 'Fechar tudo sem salvar' })
 
@@ -8,6 +13,16 @@ vim.keymap.set('n', 'ZX', ':wqa<CR>', { desc = 'Salvar tudo e sair' })
 
 vim.keymap.set('n', '<C-j>', ':bnext<CR>', { desc = 'Buffer next' })
 vim.keymap.set('n', '<C-k>', ':bprevious<CR>', { desc = 'Buffer previous' })
+
+vim.keymap.set("n", "<leader>bn", ":bnext<CR>", { desc = "Next buffer" })
+vim.keymap.set("n", "<leader>bp", ":bprevious<CR>", { desc = "Previous buffer" })
+vim.keymap.set("n", "<leader>cn", "<cmd>cnext<CR>zz")
+vim.keymap.set("n", "<leader>cp", "<cmd>cprev<CR>zz")
+vim.keymap.set("n", "<leader>ln", "<cmd>lnext<CR>zz")
+vim.keymap.set("n", "<leader>lp", "<cmd>lprev<CR>zz")
+
+vim.keymap.set("n", "<leader>o", "o<Esc>", { desc = "Open new line below" })
+vim.keymap.set("n", "<leader><S-o>", "<S-o><Esc>", { desc = "Open new line above" })
 
 -- Normal mode: copiar linha atual para clipboard
 vim.keymap.set('n', '<C-c>', '"+yy', { noremap = true, silent = true })
