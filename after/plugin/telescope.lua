@@ -10,30 +10,20 @@ vim.keymap.set('n', '<leader>fs', function()
 end)
 
 local actions = require("telescope.actions")
-local action_state = require("telescope.actions.state")
+-- local action_state = require("telescope.actions.state")
 
 require("telescope").setup({
   defaults = {
     mappings = {
       i = {
+        ["<Esc>"] = actions.close,
+        ["<C-u>"] = false,
         ["<C-j>"] = actions.move_selection_next,
         ["<C-k>"] = actions.move_selection_previous,
-        -- t = abrir em nova tab
-        ["<C-o>"] = function(prompt_bufnr)
-          local entry = action_state.get_selected_entry()
-          actions.close(prompt_bufnr)
-          vim.cmd("tabnew " .. vim.fn.fnameescape(entry.path or entry.filename or entry.value))
-        end,
       },
       n = {
         ["<C-j>"] = actions.move_selection_next,
         ["<C-k>"] = actions.move_selection_previous,
-        -- t = abrir em nova tab
-        ["<C-o>"] = function(prompt_bufnr)
-          local entry = action_state.get_selected_entry()
-          actions.close(prompt_bufnr)
-          vim.cmd("tabnew " .. vim.fn.fnameescape(entry.path or entry.filename or entry.value))
-        end,
       },
     },
   },

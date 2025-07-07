@@ -38,7 +38,7 @@ local function on_attach(bufnr)
   end, opts("abrir arquivo em nova tab"))
 
   vim.keymap.set("n", "<leader>e", function()
-    vim.cmd("wincmd w")
+    vim.cmd("wincmd p") -- Volta para o buffer anterior
   end, { buffer = bufnr })
 end
 

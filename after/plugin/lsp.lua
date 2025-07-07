@@ -56,11 +56,11 @@ require('mason-lspconfig').setup({
   },
   ensure_installed = {
     'lua_ls', -- Lua
-    'pyright', -- Python
+    -- 'pyright', -- Python
     'ts_ls', -- TypeScript/JavaScript
-    'gopls', -- Go
-    'rust_analyzer', -- Rust
-    'clangd', -- C/C++
+    -- 'gopls', -- Go
+    -- 'rust_analyzer', -- Rust
+    -- 'clangd', -- C/C++
     'html', -- HTML
     'cssls', -- CSS
     'jsonls', -- JSON
@@ -78,11 +78,16 @@ cmp.setup({
     end,
   },
   mapping = cmp.mapping.preset.insert({
-    ["<C-j>"] = cmp.mapping.select_next_item(),
-    ["<C-k>"] = cmp.mapping.select_prev_item(),
+    ["<C-j>"] = cmp.mapping.select_next_item({
+      behavior = cmp.SelectBehavior.Insert,
+    }),
+    ["<C-k>"] = cmp.mapping.select_prev_item({
+      behavior = cmp.SelectBehavior.Insert,
+    }),
     ["<CR>"] = cmp.mapping.confirm({ select = true }),
-    ["<C-Space>"] = cmp.mapping.complete(), -- aqui você também ativa via cmp
+    ["<Tab>"] = cmp.mapping.complete(), -- aqui você também ativa via cmp
   }),
+
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
