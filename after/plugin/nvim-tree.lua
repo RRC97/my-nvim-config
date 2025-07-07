@@ -7,7 +7,7 @@ vim.opt.termguicolors = true
 
 vim.keymap.set("n", "<leader>e", vim.cmd.NvimTreeOpen)
 vim.keymap.set("n", "<leader><S-e>", vim.cmd.NvimTreeClose, { desc = "Toggle Nvim Tree" })
--- vim.keymap.set("n", "<leader>b", vim.cmd.NvimTreeToggle)
+vim.keymap.set("n", "<leader>b", vim.cmd.NvimTreeToggle)
 vim.keymap.set("n", "<leader>q", "<cmd>tabclose<CR>", { desc = "Fechar tab atual" })
 
 -- vim.api.nvim_create_autocmd("TabNewEntered", {
@@ -39,13 +39,18 @@ local function on_attach(bufnr)
 
   vim.keymap.set("n", "<leader>e", function()
     vim.cmd("wincmd w")
-  end, {buffer = bufnr})
+  end, { buffer = bufnr })
 end
 
 
 require("nvim-tree").setup({
   on_attach = on_attach,
   update_focused_file = { enable = true },
+  filters = {
+    dot_files = false,
+    git_ignored = false,
+    custom = { ".git" }
+  }
 })
 
 vim.api.nvim_create_autocmd("TabNewEntered", {

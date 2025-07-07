@@ -48,3 +48,5 @@ vim.keymap.set("n", "<leader>rn", function()
   vim.o.relativenumber = not vim.o.relativenumber
 end, { desc = "Toggle relative number" })
 
+-- vim.keymap.set('n', '<leader>erc', ':edit $MYVIMRC<CR>', { desc = "Editar init.lua" })
+-- vim.keymap.set('n', '<leader>t', ':new | term<CR>', { desc = "Abrir terminal" })

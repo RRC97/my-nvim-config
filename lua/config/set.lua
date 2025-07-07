@@ -29,3 +29,17 @@ vim.o.clipboard = "unnamedplus"
 vim.o.encoding = "utf-8"
 vim.o.fileencoding = "utf-8"
 vim.o.fileencodings = "utf-8"
+
+vim.opt.shell = "powershell.exe"
+vim.opt.shellcmdflag = "-NoProfile -NoLogo -NonInteractive -Command"
+vim.opt.shellpipe = "|"
+vim.opt.shellredir = ">"
+vim.opt.shellquote = "\""
+vim.opt.shellxquote = ""
+
+vim.opt.updatetime = 50
+
+vim.cmd [[
+  highlight LineNr guifg=#7f848e
+  highlight CursorLineNr guifg=#e06c75 gui=bold
+]]
