@@ -47,7 +47,7 @@ require("nvim-tree").setup({
   on_attach = on_attach,
   update_focused_file = { enable = true },
   filters = {
-    dot_files = false,
+    dotfiles = false,
     git_ignored = false,
     custom = { ".git" }
   }

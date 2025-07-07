@@ -9,27 +9,26 @@ vim.keymap.set('i', '<C-\\>', function()
 end, { desc = 'Forçar autocomplete', silent = true })
 
 -- LSP attach
-vim.api.nvim_create_autocmd('lspattach', {
+vim.api.nvim_create_autocmd('LspAttach', {
   desc = 'LSP actions',
   callback = function(event)
     local opts = { buffer = event.buf }
 
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-    vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
-    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-    vim.keymap.set('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
+    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+    vim.keymap.set('n', 'go', vim.lsp.buf.type_definition, opts)
     vim.keymap.set('n', 'gr', function()
       vim.lsp.buf.references()
       vim.cmd("copen")
     end, opts)
-    vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
-    vim.keymap.set('n', 'gh', '<cmd>lua vim.diagnostic.open_float()<cr>', opts)
+    vim.keymap.set('n', 'gs', vim.lsp.buf.signature_help, opts)
+    vim.keymap.set('n', 'gh', vim.diagnostic.open_float, opts)
     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
     -- vim.keymap.set('n', 'gh', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>', opts)
-    vim.keymap.set('n', '<f2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
-    vim.keymap.set({ 'n', 'x' }, '<leader>=', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
-    vim.keymap.set('n', '<f4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
+    vim.keymap.set('n', '<f2>', vim.lsp.buf.rename, opts)
+    vim.keymap.set({ 'n', 'x' }, '<leader>=', function() vim.lsp.buf.format({async = true}) end, opts)
+    vim.keymap.set('n', '<f4>', vim.lsp.buf.code_action, opts)
     vim.keymap.set('n', '<leader>io', function()
       vim.lsp.buf.code_action({
         context = { only = { "source.organizeImports" } },
@@ -41,16 +40,8 @@ vim.api.nvim_create_autocmd('lspattach', {
         context = { only = { "quickfix" } },
         apply = true,
       })
-    end, { desc = "Add Missing Imports" })
+    end, opts)
   end,
-})
-
--- Configuração dos servers
-require('lspconfig').lua_ls.setup({
-  capabilities = capabilities,
-})
-require('lspconfig').ts_ls.setup({ -- CORRIGIDO o nome do server
-  capabilities = capabilities,
 })
 
 -- Mason
@@ -62,6 +53,17 @@ require('mason-lspconfig').setup({
         capabilities = capabilities,
       })
     end,
+  },
+  ensure_installed = {
+    'lua_ls', -- Lua
+    'pyright', -- Python
+    'ts_ls', -- TypeScript/JavaScript
+    'gopls', -- Go
+    'rust_analyzer', -- Rust
+    'clangd', -- C/C++
+    'html', -- HTML
+    'cssls', -- CSS
+    'jsonls', -- JSON
   },
 })
 
