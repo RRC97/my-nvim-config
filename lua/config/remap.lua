@@ -12,10 +12,14 @@ vim.keymap.set('n', 'ZQ', ':qa!<CR>', { desc = 'Fechar tudo sem salvar' })
 -- ZX → salva tudo e sai (como :wa | qa)
 vim.keymap.set('n', 'ZX', ':wqa<CR>', { desc = 'Salvar tudo e sair' })
 
+vim.keymap.set("n", "<C-j>", ":bnext<CR>", { desc = "Next buffer" })
+vim.keymap.set("n", "<C-k>", ":bprevious<CR>", { desc = "Previous buffer" })
+
 vim.keymap.set("n", "<leader>bn", ":bnext<CR>", { desc = "Next buffer" })
 vim.keymap.set("n", "<leader>bp", ":bprevious<CR>", { desc = "Previous buffer" })
 vim.keymap.set("n", "<leader>bd", ":bd<CR>", { desc = "Quit" })
-vim.keymap.set("n", "<leader>ba", ":bufdo bd<CR>", { desc = "Quit all" })
+vim.keymap.set("n", "<leader>bq", ":bufdo bd<CR>", { desc = "Quit all" })
+vim.keymap.set("n", "<leader>ba", ":new<CR>", { desc = "New buffer" })
 vim.keymap.set("n", "<leader>bo", ":only<CR>", { desc = "Quit other windows" })
 
 vim.keymap.set("n", "<leader>cn", "<cmd>cnext<CR>zz")
@@ -35,7 +39,7 @@ vim.keymap.set("n", "<leader>ln", "<cmd>lnext<CR>zz")
 vim.keymap.set("n", "<leader>lp", "<cmd>lprev<CR>zz")
 
 vim.keymap.set("n", "<CR>", "o<Esc>", { desc = "Open new line below", remap = true, silent = true })
-vim.keymap.set("n", "<leader><CR>", "<S-o><Esc>", { desc = "Open new line above", remap = true, silent = true })
+vim.keymap.set("n", "<S-CR>", "<S-o><Esc>", { desc = "Open new line above", remap = true, silent = true })
 
 -- Normal mode: copiar linha atual para clipboard
 -- vim.keymap.set('n', '<C-c>', '"+yy', { noremap = true, silent = true })
