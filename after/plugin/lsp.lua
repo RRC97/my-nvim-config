@@ -85,7 +85,7 @@ cmp.setup({
       behavior = cmp.SelectBehavior.Insert,
     }),
     ["<CR>"] = cmp.mapping.confirm({ select = true }),
-    ["<Tab>"] = cmp.mapping.complete(), -- aqui você também ativa via cmp
+    ["<C-Space>"] = cmp.mapping.complete(), -- aqui você também ativa via cmp
   }),
 
   sources = cmp.config.sources({

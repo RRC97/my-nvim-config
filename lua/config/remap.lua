@@ -38,8 +38,10 @@ end, { desc = "Abrir quickfix com diagnostics" })
 vim.keymap.set("n", "<leader>ln", "<cmd>lnext<CR>zz")
 vim.keymap.set("n", "<leader>lp", "<cmd>lprev<CR>zz")
 
+vim.keymap.set("n", "<leader>tq", "<cmd>tabclose<CR>", { desc = "Fechar tab atual" })
+
 vim.keymap.set("n", "<CR>", "o<Esc>", { desc = "Open new line below", remap = true, silent = true })
-vim.keymap.set("n", "<S-CR>", "<S-o><Esc>", { desc = "Open new line above", remap = true, silent = true })
+vim.keymap.set("n", "<leader><CR>", "<S-o><Esc>", { desc = "Open new line above", remap = true, silent = true })
 
 -- Normal mode: copiar linha atual para clipboard
 -- vim.keymap.set('n', '<C-c>', '"+yy', { noremap = true, silent = true })
