@@ -22,7 +22,12 @@ vim.opt.hlsearch = false
 vim.opt.incsearch = true
 
 vim.opt.termguicolors = true
+
+vim.opt.scrolloff = 8
 vim.opt.signcolumn = 'yes'
+vim.opt.isfname:append("@-@")
+
+vim.opt.updatetime = 50
 
 vim.o.clipboard = "unnamedplus"
 
@@ -36,8 +41,6 @@ vim.opt.shellpipe = "|"
 vim.opt.shellredir = ">"
 vim.opt.shellquote = "\""
 vim.opt.shellxquote = ""
-
-vim.opt.updatetime = 50
 
 vim.cmd [[
   highlight LineNr guifg=#7f848e
