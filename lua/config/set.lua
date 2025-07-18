@@ -46,3 +46,5 @@ vim.cmd [[
   highlight LineNr guifg=#7f848e
   highlight CursorLineNr guifg=#e06c75 gui=bold
 ]]
+
+vim.opt.guifont = "JetBrainsMonoNL Nerd Font:h12"

@@ -1,7 +1,8 @@
 require('Comment').setup()
 
 -- Modo normal
-vim.keymap.set("n", "<C-_>", "gcc", { remap = true, desc = "Toggle comment line" })
+vim.keymap.set("n", "<C-/>", "gcc", { remap = true, desc = "Toggle comment line" })
 
 -- Modo visual
-vim.keymap.set("x", "<C-_>", "gc", { remap = true, desc = "Toggle comment selection" })
+vim.keymap.set("x", "<C-/>", "gc", { remap = true, desc = "Toggle comment selection" })
+vim.keymap.set("v", "<C-/>", "gc", { remap = true, desc = "Toggle comment visual mode" })

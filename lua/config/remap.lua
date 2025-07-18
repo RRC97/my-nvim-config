@@ -26,35 +26,23 @@ vim.keymap.set("n", "<leader>cn", "<cmd>cnext<CR>zz")
 vim.keymap.set("n", "<leader>cp", "<cmd>cprev<CR>zz")
 vim.keymap.set("n", "<leader>cq", function()
   -- if there are no diagnostics, do nothing or close quickfix opened
-  if vim.tbl_isempty(vim.diagnostic.get(0)) then
+  local diagnostics = vim.diagnostic.get(0)
+  if vim.tbl_isempty(diagnostics) then
     vim.cmd("cclose")
   else
-    vim.diagnostic.setqflist()
+    vim.diagnostic.setqflist({ open = false })
     vim.cmd("copen")
-    vim.cmd("wincmd p")
   end
 end, { desc = "Abrir quickfix com diagnostics" })
 
+vim.keymap.set("n", "<leader>q", ":tabclose<CR>", { desc = "Close current tab" })
+
 vim.keymap.set("n", "<leader>ln", "<cmd>lnext<CR>zz")
 vim.keymap.set("n", "<leader>lp", "<cmd>lprev<CR>zz")
-
-vim.keymap.set("n", "<leader>tq", "<cmd>tabclose<CR>", { desc = "Fechar tab atual" })
-
-vim.keymap.set("n", "<CR>", "o<Esc>", { desc = "Open new line below", remap = true, silent = true })
-vim.keymap.set("n", "<leader><CR>", "<S-o><Esc>", { desc = "Open new line above", remap = true, silent = true })
-
--- Normal mode: copiar linha atual para clipboard
--- vim.keymap.set('n', '<C-c>', '"+yy', { noremap = true, silent = true })
-
--- Visual mode: copiar seleção para clipboard
--- vim.keymap.set('x', '<C-c>', '"+y', { noremap = true, silent = true })
-
--- Insert mode: colar do clipboard
--- vim.keymap.set('i', '<C-v>', '<C-o>"+p', { noremap = true, silent = true })
 
 vim.keymap.set("n", "<leader>rn", function()
   vim.o.relativenumber = not vim.o.relativenumber
 end, { desc = "Toggle relative number" })
 
--- vim.keymap.set('n', '<leader>rc', ':edit $MYVIMRC<CR>', { desc = "Editar init.lua" })
--- vim.keymap.set('n', '<leader>t', ':new | term<CR>', { desc = "Abrir terminal" })
+vim.keymap.set("n", "<C-CR>", "o<Esc>", { noremap = true, silent = true, desc = "Nova linha abaixo" })
+vim.keymap.set("n", "<C-S-CR>", "O<Esc>", { noremap = true, silent = true, desc = "Nova linha acima" })
