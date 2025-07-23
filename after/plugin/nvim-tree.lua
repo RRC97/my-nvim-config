@@ -34,11 +34,17 @@ local function on_attach(bufnr)
     if node and not node.nodes then -- verifica se não é diretório
       vim.cmd("tabnew " .. vim.fn.fnameescape(node.absolute_path))
     end
-  end, opts("abrir arquivo em nova tab"))
+  end, opts("Open File In Tab"))
 
   vim.keymap.set("n", "<leader>e", function()
     vim.cmd("wincmd w") -- Volta para o buffer anterior
-  end, { buffer = bufnr })
+  end, opts("Focus on File"))
+  vim.keymap.set("n", "<leader>t", function()
+    local node = api.tree.get_node_under_cursor()
+    if node and node.nodes then
+      vim.cmd("ToggleTerm dir=" .. vim.fn.fnameescape(node.absolute_path))
+    end
+  end, opts("Open In Terminal"))
 end
 
 

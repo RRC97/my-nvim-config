@@ -35,12 +35,12 @@ vim.o.encoding = "utf-8"
 vim.o.fileencoding = "utf-8"
 vim.o.fileencodings = "utf-8"
 
-vim.opt.shell = "powershell.exe"
-vim.opt.shellcmdflag = "-NoProfile -NoLogo -NonInteractive -Command"
-vim.opt.shellpipe = "|"
-vim.opt.shellredir = ">"
-vim.opt.shellquote = "\""
-vim.opt.shellxquote = ""
+-- vim.opt.shell = "powershell.exe"
+-- vim.opt.shellcmdflag = "-NoProfile -NoLogo -NonInteractive -Command"
+-- vim.opt.shellpipe = "|"
+-- vim.opt.shellredir = ">"
+-- vim.opt.shellquote = "\""
+-- vim.opt.shellxquote = ""
 
 vim.cmd [[
   highlight LineNr guifg=#7f848e
