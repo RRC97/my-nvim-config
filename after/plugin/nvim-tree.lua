@@ -49,6 +49,7 @@ end
 
 
 require("nvim-tree").setup({
+  view = { adaptive_size = true },
   on_attach = on_attach,
   update_focused_file = { enable = true },
   filters = {
