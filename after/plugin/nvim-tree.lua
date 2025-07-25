@@ -22,6 +22,8 @@ local function on_attach(bufnr)
   local api = require("nvim-tree.api")
   api.config.mappings.default_on_attach(bufnr)
 
+  local harpoon = require("harpoon")
+
   local function opts(desc)
     return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
   end
@@ -35,6 +37,20 @@ local function on_attach(bufnr)
       vim.cmd("tabnew " .. vim.fn.fnameescape(node.absolute_path))
     end
   end, opts("Open File In Tab"))
+
+  vim.keymap.set("n", "<leader>a", function()
+    local node = api.tree.get_node_under_cursor()
+    if node and not node.nodes then -- verifica se não é diretório
+      harpoon:list():add({
+        value = vim.fn.fnamemodify(node.absolute_path, ":."),
+        context = {
+          col = 1,
+          row = 1,
+        }
+      })
+      vim.notify("Added to Harpoon: " .. node.name)
+    end
+  end, opts("Add File to Harpoon"))
 
   vim.keymap.set("n", "<leader>e", function()
     vim.cmd("wincmd w") -- Volta para o buffer anterior
