@@ -42,11 +42,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
       })
     end, opts)
     vim.keymap.set("n", "<leader>ii", function ()
-      vim.lsp.bug.code_action({
+      vim.lsp.buf.code_action({
         context = { only = { "quickfix" } },
         apply = true,
       })
-    end)
+    end, opts)
     vim.keymap.set('n', '<leader>ia', function()
       vim.lsp.buf.code_action({
         context = { only = { "source.fixAll" } },
