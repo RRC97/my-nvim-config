@@ -41,7 +41,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         apply = true,
       })
     end, opts)
-    vim.keymap.set("n", "<leader>ii", function ()
+    vim.keymap.set({"n", "v"}, "<leader>ii", function ()
       vim.lsp.buf.code_action({
         context = { only = { "quickfix" } },
         apply = true,
