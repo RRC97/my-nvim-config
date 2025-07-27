@@ -27,17 +27,29 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
     -- vim.keymap.set('n', 'gh', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>', opts)
     vim.keymap.set('n', '<f2>', vim.lsp.buf.rename, opts)
-    vim.keymap.set({ 'n', 'x' }, '<leader>=', function() vim.lsp.buf.format({async = true}) end, opts)
+    vim.keymap.set({ 'n', 'x' }, '<leader>=', function() vim.lsp.buf.format({ async = true }) end, opts)
     vim.keymap.set('n', '<f4>', vim.lsp.buf.code_action, opts)
     vim.keymap.set('n', '<leader>io', function()
-      vim.lsp.buf.code_action({
-        context = { only = { "source.organizeImports" } },
+      vim.lsp.buf.execute_command({
+        context = {
+          only = {
+            "source.addMissingImports",
+            "source.organizeImports"
+          },
+          diagnostics = {}
+        },
         apply = true,
       })
     end, opts)
+    vim.keymap.set("n", "<leader>ii", function ()
+      vim.lsp.bug.code_action({
+        context = { only = { "quickfix" } },
+        apply = true,
+      })
+    end)
     vim.keymap.set('n', '<leader>ia', function()
       vim.lsp.buf.code_action({
-        context = { only = { "quickfix" } },
+        context = { only = { "source.fixAll" } },
         apply = true,
       })
     end, opts)
@@ -47,25 +59,30 @@ vim.api.nvim_create_autocmd('LspAttach', {
 -- Mason
 require('mason').setup({})
 require('mason-lspconfig').setup({
-  handlers = {
-    function(server_name)
-      require('lspconfig')[server_name].setup({
-        capabilities = capabilities,
-      })
-    end,
-  },
   ensure_installed = {
     'lua_ls', -- Lua
     -- 'pyright', -- Python
-    'ts_ls', -- TypeScript/JavaScript
+    'ts_ls',  -- TypeScript/JavaScript
     -- 'gopls', -- Go
     -- 'rust_analyzer', -- Rust
     -- 'clangd', -- C/C++
-    'html', -- HTML
-    'cssls', -- CSS
-    'jsonls', -- JSON
+    'html',         -- HTML
+    'cssls',        -- CSS
+    'jsonls',       -- JSON
+    'intelephense', -- PHP
   },
+  automatic_installation = true,
 })
+
+-- Carrega todos os LSPs instalados, mesmo os fora do ensure_installed
+local lspconfig = require('lspconfig')
+local servers = require('mason-lspconfig').get_installed_servers()
+
+for _, server in ipairs(servers) do
+  lspconfig[server].setup({
+    capabilities = capabilities,
+  })
+end
 
 -- CMP config
 local cmp = require('cmp')

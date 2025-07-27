@@ -1,7 +1,11 @@
 vim.g.mapleader = " "
 
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
+
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 
@@ -46,3 +50,5 @@ end, { desc = "Toggle relative number" })
 
 vim.keymap.set("n", "<C-CR>", "o<Esc>", { noremap = true, silent = true, desc = "Nova linha abaixo" })
 vim.keymap.set("n", "<C-S-CR>", "O<Esc>", { noremap = true, silent = true, desc = "Nova linha acima" })
+
+vim.keymap.set("n", "<leader><leader>", ":source $MYVIMRC<CR>", { desc = "Refresh config" })
