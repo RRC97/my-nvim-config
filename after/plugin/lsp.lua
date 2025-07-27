@@ -30,7 +30,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set({ 'n', 'x' }, '<leader>=', function() vim.lsp.buf.format({ async = true }) end, opts)
     vim.keymap.set('n', '<f4>', vim.lsp.buf.code_action, opts)
     vim.keymap.set('n', '<leader>io', function()
-      vim.lsp.buf.execute_command({
+      vim.lsp.buf.code_action({
         context = {
           only = {
             "source.addMissingImports",
