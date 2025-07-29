@@ -6,8 +6,8 @@ vim.g.loaded_netrwPlugin = 1
 vim.opt.termguicolors = true
 
 vim.keymap.set("n", "<leader>e", vim.cmd.NvimTreeOpen)
-vim.keymap.set("n", "<leader><S-e>", vim.cmd.NvimTreeClose, { desc = "Toggle Nvim Tree" })
-vim.keymap.set("n", "<leader>b", vim.cmd.NvimTreeToggle)
+-- vim.keymap.set("n", "<leader><S-e>", vim.cmd.NvimTreeClose, { desc = "Toggle Nvim Tree" })
+-- vim.keymap.set("n", "<leader>b", vim.cmd.NvimTreeToggle)
 
 -- vim.api.nvim_create_autocmd("TabNewEntered", {
 --   callback = function()
@@ -17,6 +17,32 @@ vim.keymap.set("n", "<leader>b", vim.cmd.NvimTreeToggle)
 --     end
 --   end,
 -- })
+local function open_win_config()
+  local screen_w = vim.opt.columns:get()
+  local screen_h = vim.opt.lines:get() - vim.opt.cmdheight:get()
+
+  -- Define desired window ratios (adjust as needed)
+  local WIDTH_RATIO = 0.9
+  local HEIGHT_RATIO = 0.9
+
+  local window_w = screen_w * WIDTH_RATIO
+  local window_h = screen_h * HEIGHT_RATIO
+
+  local window_w_int = math.floor(window_w)
+  local window_h_int = math.floor(window_h)
+
+  local center_x = (screen_w - window_w) / 2
+  local center_y = ((vim.opt.lines:get() - window_h) / 2) - vim.opt.cmdheight:get()
+
+  return {
+    border = "rounded",     -- Optional: set border style
+    relative = "editor",
+    row = center_y,
+    col = center_x,
+    width = window_w_int,
+    height = window_h_int,
+  }
+end
 
 local function on_attach(bufnr)
   local api = require("nvim-tree.api")
@@ -53,7 +79,7 @@ local function on_attach(bufnr)
   end, opts("Add File to Harpoon"))
 
   vim.keymap.set("n", "<leader>e", function()
-    vim.cmd("wincmd w") -- Volta para o buffer anterior
+    vim.cmd.NvimTreeClose()
   end, opts("Focus on File"))
   vim.keymap.set("n", "<leader>t", function()
     local node = api.tree.get_node_under_cursor()
@@ -66,9 +92,13 @@ end
 
 require("nvim-tree").setup({
   view = {
-    adaptive_size = true,
     number = true,
     relativenumber = true,
+    float = {
+      enable = true,
+      quit_on_focus_loss = true,
+      open_win_config = open_win_config,
+    },
   },
   on_attach = on_attach,
   update_focused_file = { enable = true },
@@ -78,26 +108,3 @@ require("nvim-tree").setup({
     custom = { "\\.git$" }
   }
 })
-
-vim.api.nvim_create_autocmd("TabNewEntered", {
-  callback = function()
-    require("nvim-tree.api").tree.open()
-    vim.cmd("wincmd p")
-  end,
-})
-
--- OR setup with some options
--- require("nvim-tree").setup({
---   sort = {
---     sorter = "case_sensitive",
---   },
---   view = {
---     width = 30,
---   },
---   renderer = {
---     group_empty = true,
---   },
---   filters = {
---     dotfiles = true,
---   },
--- })
