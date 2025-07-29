@@ -34,7 +34,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
         context = {
           only = {
             "source.addMissingImports",
-            "source.organizeImports"
+            "source.organizeImports",
+            "source.removeUnused",
           },
           diagnostics = {}
         },
