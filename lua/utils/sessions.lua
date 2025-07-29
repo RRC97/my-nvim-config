@@ -19,6 +19,7 @@ end
 -- Esta é uma implementação básica. Para casos complexos, considere uma biblioteca externa.
 -- Codifica caracteres não-alfanuméricos/numeros, mas mantém ., -, _
 -- OBS: Não codifica '/' aqui, ele será tratado separadamente para nomes de arquivo.
+--- Funções auxiliares para codificação/decodificação URL (SUAS FUNÇÕES) ---
 local function url_encode_strict(str)
   if not str then return "" end
   -- Substitui espaços por %20 para clareza
@@ -100,9 +101,11 @@ M.load_session_by_name = function(session_filename_encoded)
   end
 
   vim.cmd('silent! %bdelete!')
-  vim.cmd('silent! source ' .. session_file_path)
-  -- Mensagem de confirmação usando o path decodificado para legibilidade
-  print('Sessão carregada: ' .. url_decode(session_filename_encoded:gsub('_', '/'))) -- Decodifica e reverte _ para / para display
+
+  -- CORREÇÃO: Use vim.fn.fnameescape() para garantir que o caminho seja interpretado literalmente.
+  vim.cmd('silent! source ' .. vim.fn.fnameescape(session_file_path))
+
+  print('Sessão carregada: ' .. url_decode(session_filename_encoded:gsub('_', '/')))
 end
 
 --- Tenta carregar a sessão automaticamente baseada no diretório de trabalho atual.
@@ -174,8 +177,8 @@ M.get_available_sessions_for_telescope = function()
 
     table.insert(sessions_data, {
       value = session_filename_encoded, -- O nome real do arquivo (codificado), usado para load/delete
-      display = display_name,           -- O que o usuário verá e poderá buscar (path completo decodificado e com barras)
-      ordinal = display_name,           -- Importante para que a busca fuzzy use o 'display'
+      display = display_name,     -- O que o usuário verá e poderá buscar (path completo decodificado e com barras)
+      ordinal = display_name,     -- Importante para que a busca fuzzy use o 'display'
     })
   end
 
@@ -187,6 +190,18 @@ M.get_available_sessions_for_telescope = function()
   return sessions_data
 end
 
+-- Definir suas ações customizadas para o Telescope
+local custom_actions = require('telescope.actions') -- Reutilizar actions
+
+custom_actions.load_session = function(prompt_bufnr)
+  local selection = action_state.get_selected_entry()
+  custom_actions.close(prompt_bufnr)
+  if selection then
+    -- Aqui você pode adicionar o print de debug novamente se quiser verificar o valor.
+    -- print("DEBUG: Carregando sessão pelo Telescope: " .. tostring(selection.value))
+    M.load_session_by_name(selection.value)
+  end
+end
 
 -- === Função do Picker do Telescope, agora dentro do M ===
 M.list_and_load_sessions = function(opts)
@@ -194,47 +209,37 @@ M.list_and_load_sessions = function(opts)
 
   -- Função interna para criar e encontrar o picker
   local function find_sessions()
-    -- Usa a nova função que retorna dados formatados para o Telescope
     local sessions_for_telescope = M.get_available_sessions_for_telescope()
 
     pickers.new(opts, {
       prompt_title = 'Minhas Sessões Salvas',
       finder = finders.new_table({
         results = sessions_for_telescope,
-        entry_maker = function(entry) -- Define como cada entrada é processada
+        entry_maker = function(entry)
           return {
             value = entry.value,
             display = entry.display,
-            ordinal = entry.ordinal, -- Garante que o fuzzy finder use o 'display'
+            ordinal = entry.ordinal,
           }
         end,
       }),
-      sorter = conf.file_sorter(opts), -- O sorter padrão funciona com o 'ordinal'
+      sorter = conf.file_sorter(opts),
       attach_mappings = function(prompt_bufnr, map)
-        -- Mapeamento para carregar a sessão (Enter)
-        actions.select_default:enhance({
-          fn = function(prompt_bufnr)
-            local selection = action_state.get_selected_entry()
-            actions.close(prompt_bufnr)
-            if selection then
-              M.load_session_by_name(selection.value) -- Usa o 'value' real do arquivo (codificado)
-            end
-          end,
-        })
+        -- **Mapeamento para carregar a sessão (Enter) - USANDO AÇÃO CUSTOMIZADA**
+        map('i', '<CR>', custom_actions.load_session) -- Mapeia Enter para sua nova ação
+        map('n', '<CR>', custom_actions.load_session) -- Também para o modo normal (se o picker for modo normal)
 
-        -- Mapeamento para deletar a sessão (ex: <C-d> para Ctrl+d)
+        -- ... (Mapeamentos para deletar a sessão <C-d> - esses permanecem iguais)
         map('i', '<C-d>', function()
           local selection = action_state.get_selected_entry()
           if selection then
-            M.delete_session_by_name(selection.value) -- Usa o 'value' real do arquivo (codificado)
-            -- Não feche o Telescope aqui. Deixe o autocmd lidar com a atualização.
+            M.delete_session_by_name(selection.value)
           end
         end)
         map('n', '<C-d>', function()
           local selection = action_state.get_selected_entry()
           if selection then
-            M.delete_session_by_name(selection.value) -- Usa o 'value' real do arquivo (codificado)
-            -- Não feche o Telescope aqui. Deixe o autocmd lidar com a atualização.
+            M.delete_session_by_name(selection.value)
           end
         end)
 
