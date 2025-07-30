@@ -78,13 +78,16 @@ M.save_current_session = function()
   local session_filename_encoded = get_encoded_session_filename(current_dir)
 
   if session_filename_encoded == '' then
-    print('Não foi possível determinar o nome da sessão. Verifique o PWD.')
+    -- ALTERAÇÃO AQUI: Usar echom para mensagens de aviso
+    vim.cmd('echom "WARN: Não foi possível determinar o nome da sessão. Verifique o PWD."')
     return
   end
 
   local session_file_path = session_dir .. '/' .. session_filename_encoded .. '.vim'
-  vim.cmd('mksession! ' .. session_file_path)
-  print('Sessão salva em: ' .. session_file_path)
+  vim.cmd('mksession! ' .. vim.fn.fnameescape(session_file_path))
+
+  -- ALTERAÇÃO AQUI: Usar echom para mensagens informativas
+  vim.cmd('echom "Sessão salva para: ' .. current_dir .. '"')
 end
 
 --- Carrega uma sessão específica pelo seu nome de arquivo (codificado em URL).
@@ -128,38 +131,37 @@ end
 -- @param session_filename_encoded string O nome do arquivo de sessão a ser deletado (sem a extensão .vim), codificado.
 M.delete_session_by_name = function(session_filename_encoded)
   if not session_filename_encoded or session_filename_encoded == '' then
-    print('Nome da sessão não pode ser vazio para deletar.')
+    vim.notify('Nome da sessão não pode ser vazio para deletar.', vim.log.levels.WARN)
     return
   end
 
   local session_file_path = session_dir .. '/' .. session_filename_encoded .. '.vim'
   if vim.fn.filereadable(session_file_path) == 0 then
-    print('Nenhuma sessão encontrada com o nome: ' .. url_decode(session_filename_encoded:gsub('_', '/')))
+    vim.notify('Nenhuma sessão encontrada com o nome: ' .. url_decode(session_filename_encoded:gsub('_', '/')), vim.log.levels.INFO)
     return
   end
 
-  local display_name = url_decode(session_filename_encoded:gsub('_', '/')) -- Decodifica e reverte _ para / para confirmação
-  vim.ui.select(
-    { 'Sim', 'Não' },
-    { prompt = 'Tem certeza que deseja deletar a sessão: ' .. display_name .. '?' },
-    function(choice)
-      if choice == 'Sim' then
-        local success = vim.fn.delete(session_file_path)
-        if success == 0 then
-          print('Sessão "' .. display_name .. '" deletada com sucesso.')
-          vim.api.nvim_exec_autocmds('User', {
-            pattern = 'TelescopeSessionsChanged',
-            modeline = false,
-            buffer = 0,
-          })
-        else
-          print('Erro ao deletar a sessão "' .. display_name .. '".')
-        end
-      else
-        print('Exclusão da sessão cancelada.')
-      end
+  local display_name = url_decode(session_filename_encoded:gsub('_', '/'))
+  local confirm_prompt = 'Tem certeza que deseja deletar a sessão: ' .. display_name .. '? (y/N): '
+  -- CORREÇÃO AQUI: Substituir 'c' por '' para desativar o autocompletar
+  local choice = vim.fn.input(confirm_prompt, '')
+
+  choice = choice:lower()
+
+  if choice == 'y' then
+    local success = vim.fn.delete(session_file_path)
+    if success == 0 then
+      vim.notify('Sessão "' .. display_name .. '" deletada com sucesso.', vim.log.levels.INFO)
+      vim.api.nvim_exec_autocmds('User', {
+        pattern = 'TelescopeSessionsChanged',
+        modeline = false,
+      })
+    else
+      vim.notify('Erro ao deletar a sessão "' .. display_name .. '".', vim.log.levels.ERROR)
     end
-  )
+  else
+    vim.notify('Exclusão da sessão cancelada.', vim.log.levels.INFO)
+  end
 end
 
 --- Retorna uma lista de objetos de sessão para o Telescope.
