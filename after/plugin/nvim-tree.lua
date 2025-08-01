@@ -5,7 +5,9 @@ vim.g.loaded_netrwPlugin = 1
 -- optionally enable 24-bit colour
 vim.opt.termguicolors = true
 
-vim.keymap.set("n", "<leader>e", vim.cmd.NvimTreeOpen)
+vim.keymap.set("n", "<leader>e", function()
+  require("nvim-tree.api").tree.open({path = vim.fn.getcwd()})
+end)
 -- vim.keymap.set("n", "<leader><S-e>", vim.cmd.NvimTreeClose, { desc = "Toggle Nvim Tree" })
 -- vim.keymap.set("n", "<leader>b", vim.cmd.NvimTreeToggle)
 

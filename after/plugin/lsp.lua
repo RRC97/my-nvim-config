@@ -14,46 +14,35 @@ vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(event)
     local opts = { buffer = event.buf }
 
-    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-    vim.keymap.set('n', 'go', vim.lsp.buf.type_definition, opts)
-    vim.keymap.set('n', 'gr', function()
-      vim.lsp.buf.references()
-      vim.cmd("copen")
-    end, opts)
-    vim.keymap.set('n', 'gs', vim.lsp.buf.signature_help, opts)
     vim.keymap.set('n', 'gh', vim.diagnostic.open_float, opts)
-    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
     -- vim.keymap.set('n', 'gh', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>', opts)
-    vim.keymap.set('n', '<f2>', vim.lsp.buf.rename, opts)
     vim.keymap.set({ 'n', 'x' }, '<leader>=', function() vim.lsp.buf.format({ async = true }) end, opts)
-    vim.keymap.set('n', '<f4>', vim.lsp.buf.code_action, opts)
-    vim.keymap.set('n', '<leader>io', function()
-      vim.lsp.buf.code_action({
-        context = {
-          only = {
-            "source.addMissingImports",
-            "source.organizeImports",
-            "source.removeUnused",
-          },
-          diagnostics = {}
-        },
-        apply = true,
-      })
-    end, opts)
-    vim.keymap.set({"n", "v"}, "<leader>ii", function ()
-      vim.lsp.buf.code_action({
-        context = { only = { "quickfix" } },
-        apply = true,
-      })
-    end, opts)
-    vim.keymap.set('n', '<leader>ia', function()
-      vim.lsp.buf.code_action({
-        context = { only = { "source.fixAll" } },
-        apply = true,
-      })
-    end, opts)
+    -- vim.keymap.set('n', '<leader>io', function()
+    --   vim.lsp.buf.code_action({
+    --     context = {
+    --       only = {
+    --         "source.addMissingImports",
+    --         "source.organizeImports",
+    --         "source.removeUnused",
+    --       },
+    --       diagnostics = {}
+    --     },
+    --     apply = true,
+    --   })
+    -- end, opts)
+    -- vim.keymap.set({"n", "v"}, "<leader>ii", function ()
+    --   vim.lsp.buf.code_action({
+    --     context = { only = { "quickfix" } },
+    --     apply = true,
+    --   })
+    -- end, opts)
+    -- vim.keymap.set('n', '<leader>ia', function()
+    --   vim.lsp.buf.code_action({
+    --     context = { only = { "source.fixAll" } },
+    --     apply = true,
+    --   })
+    -- end, opts)
   end,
 })
 

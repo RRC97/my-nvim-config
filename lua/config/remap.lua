@@ -24,7 +24,7 @@ vim.keymap.set("n", "<leader>bp", ":bprevious<CR>", { desc = "Previous buffer" }
 vim.keymap.set("n", "<leader>bd", ":bd<CR>", { desc = "Quit" })
 vim.keymap.set("n", "<leader>bq", ":bufdo bd<CR>", { desc = "Quit all" })
 vim.keymap.set("n", "<leader>ba", ":new<CR>", { desc = "New buffer" })
-vim.keymap.set("n", "<leader>bo", ":only<CR>", { desc = "Quit other windows" })
+vim.keymap.set("n", "<leader>bo", ":%bd|e#<CR>", { desc = "Quit other windows" })
 
 vim.keymap.set("n", "<leader>cn", "<cmd>cnext<CR>zz")
 vim.keymap.set("n", "<leader>cp", "<cmd>cprev<CR>zz")

@@ -8,7 +8,8 @@ local action_state = require('telescope.actions.state')
 local M = {}
 
 -- Diretório onde as sessões serão salvas
-local session_dir = vim.fn.expand(vim.env.HOME .. '/.local/share/nvim/manual_sessions')
+local session_dir = vim.fn.expand(vim.env.HOME .. '/.local/share/nvim/sessions')
+M.session_dir = session_dir -- Expor o diretório para uso externo, se necessário
 
 -- Garante que o diretório exista
 if vim.fn.isdirectory(session_dir) == 0 then
