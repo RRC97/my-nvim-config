@@ -110,3 +110,10 @@ require("nvim-tree").setup({
     custom = { "\\.git$" }
   }
 })
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "NvimTree" },
+  callback = function()
+    vim.b.treesitter_context_disabled = true
+  end,
+})

@@ -10,6 +10,7 @@ local M = {}
 -- Diretório onde as sessões serão salvas
 local session_dir = vim.fn.expand(vim.env.HOME .. '/.local/share/nvim/sessions')
 M.session_dir = session_dir -- Expor o diretório para uso externo, se necessário
+M.cwd = vim.fn.getcwd() -- Armazena o diretório de trabalho atual
 
 -- Garante que o diretório exista
 if vim.fn.isdirectory(session_dir) == 0 then
@@ -75,7 +76,7 @@ end
 
 --- Salva a sessão atual. O nome do arquivo será o path completo codificado em URL.
 M.save_current_session = function()
-  local current_dir = vim.fn.getcwd()
+  local current_dir = vim.fn.getcwd() or M.cwd -- Usa o diretório atual ou o armazenado em M.cwd
   local session_filename_encoded = get_encoded_session_filename(current_dir)
 
   if session_filename_encoded == '' then

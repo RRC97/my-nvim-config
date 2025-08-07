@@ -16,8 +16,8 @@ vim.keymap.set('n', 'ZQ', ':qa!<CR>', { desc = 'Fechar tudo sem salvar' })
 -- ZX → salva tudo e sai (como :wa | qa)
 vim.keymap.set('n', 'ZX', ':wqa<CR>', { desc = 'Salvar tudo e sair' })
 
-vim.keymap.set("n", "<C-j>", ":bnext<CR>", { desc = "Next buffer" })
-vim.keymap.set("n", "<C-k>", ":bprevious<CR>", { desc = "Previous buffer" })
+-- vim.keymap.set("n", "<C-j>", ":bnext<CR>", { desc = "Next buffer" })
+-- vim.keymap.set("n", "<C-k>", ":bprevious<CR>", { desc = "Previous buffer" })
 
 vim.keymap.set("n", "<leader>bn", ":bnext<CR>", { desc = "Next buffer" })
 vim.keymap.set("n", "<leader>bp", ":bprevious<CR>", { desc = "Previous buffer" })
@@ -52,3 +52,11 @@ vim.keymap.set("n", "<C-CR>", "o<Esc>", { noremap = true, silent = true, desc = 
 vim.keymap.set("n", "<C-S-CR>", "O<Esc>", { noremap = true, silent = true, desc = "Nova linha acima" })
 
 vim.keymap.set("n", "<leader><leader>", ":source $MYVIMRC<CR>", { desc = "Refresh config" })
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "qf" },
+  callback = function()
+    vim.keymap.set("n", "q", "<cmd>cclose<CR>",
+      { buffer = true, desc = "Close quickfix" })
+  end,
+})

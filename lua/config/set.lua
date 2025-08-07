@@ -1,4 +1,6 @@
 -- vim.opt.guicursor = ""
+--
+vim.opt.cursorline = false
 
 vim.opt.showmode = false;
 
@@ -44,9 +46,13 @@ vim.o.fileencodings = "utf-8"
 -- vim.opt.shellquote = "\""
 -- vim.opt.shellxquote = ""
 
+  -- highlight CursorLineNr guifg=#e06c75 gui=bold
 vim.cmd [[
   highlight LineNr guifg=#7f848e
-  highlight CursorLineNr guifg=#e06c75 gui=bold
+  highlight CursorLineNr cterm=NONE ctermbg=DarkGray guibg=#3c3c3c
+  highlight link @tag.treesitter Identifier
+  highlight link @attribute.treesitter Type
+  highlight link @variable.treesitter Identifier
 ]]
 
 vim.opt.guifont = "JetBrainsMonoNL Nerd Font:h10"
