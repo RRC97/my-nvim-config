@@ -27,7 +27,7 @@ vim.opt.incsearch = true
 
 vim.opt.termguicolors = true
 
-vim.opt.scrolloff = 8
+-- vim.opt.scrolloff = 8
 vim.opt.signcolumn = 'yes'
 vim.opt.isfname:append("@-@")
 
@@ -46,7 +46,7 @@ vim.o.fileencodings = "utf-8"
 -- vim.opt.shellquote = "\""
 -- vim.opt.shellxquote = ""
 
-  -- highlight CursorLineNr guifg=#e06c75 gui=bold
+-- highlight CursorLineNr guifg=#e06c75 gui=bold
 vim.cmd [[
   highlight LineNr guifg=#7f848e
   highlight CursorLineNr cterm=NONE ctermbg=DarkGray guibg=#3c3c3c
