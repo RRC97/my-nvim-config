@@ -2,9 +2,6 @@
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
--- optionally enable 24-bit colour
-vim.opt.termguicolors = true
-
 vim.keymap.set("n", "<leader>e", function()
   require("nvim-tree.api").tree.open({path = vim.fn.getcwd()})
 end)

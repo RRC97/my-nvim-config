@@ -9,22 +9,21 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 
+-- greatest remap ever
+vim.keymap.set("x", "<leader>p", [["_dP]])
+
+-- next greatest remap ever : asbjornHaland
+vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
+vim.keymap.set("n", "<leader>Y", [["+Y]])
+
+vim.keymap.set({"n", "v"}, "<leader>d", [["_d]])
+
 -- ZZ → sair sem salvar (como :qa)
 vim.keymap.set('n', 'ZZ', ':qa<CR>', { desc = 'Fechar tudo sem salvar' })
 vim.keymap.set('n', 'ZQ', ':qa!<CR>', { desc = 'Fechar tudo sem salvar' })
 
 -- ZX → salva tudo e sai (como :wa | qa)
 vim.keymap.set('n', 'ZX', ':wqa<CR>', { desc = 'Salvar tudo e sair' })
-
--- vim.keymap.set("n", "<C-j>", ":bnext<CR>", { desc = "Next buffer" })
--- vim.keymap.set("n", "<C-k>", ":bprevious<CR>", { desc = "Previous buffer" })
-
-vim.keymap.set("n", "<leader>bn", ":bnext<CR>", { desc = "Next buffer" })
-vim.keymap.set("n", "<leader>bp", ":bprevious<CR>", { desc = "Previous buffer" })
-vim.keymap.set("n", "<leader>bd", ":bd<CR>", { desc = "Quit" })
-vim.keymap.set("n", "<leader>bq", ":bufdo bd<CR>", { desc = "Quit all" })
-vim.keymap.set("n", "<leader>ba", ":new<CR>", { desc = "New buffer" })
-vim.keymap.set("n", "<leader>bo", ":%bd|e#<CR>", { desc = "Quit other windows" })
 
 vim.keymap.set("n", "<leader>cn", "<cmd>cnext<CR>zz")
 vim.keymap.set("n", "<leader>cp", "<cmd>cprev<CR>zz")
@@ -47,7 +46,6 @@ vim.keymap.set("n", "<leader>lp", "<cmd>lprev<CR>zz")
 vim.keymap.set("n", "<leader>rn", function()
   vim.o.relativenumber = not vim.o.relativenumber
 end, { desc = "Toggle relative number" })
-
 vim.keymap.set("n", "<C-CR>", "o<Esc>", { noremap = true, silent = true, desc = "Nova linha abaixo" })
 vim.keymap.set("n", "<C-S-CR>", "O<Esc>", { noremap = true, silent = true, desc = "Nova linha acima" })
 

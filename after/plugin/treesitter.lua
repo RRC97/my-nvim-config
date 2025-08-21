@@ -1,7 +1,11 @@
 require('nvim-treesitter.configs').setup({
   -- A list of parser names, or "all" (the listed parsers MUST always be installed)
-  ensure_installed = "all",
-  ignore_install = { "ipkg", "phpdoc" },
+  ensure_installed = {
+    "html", "css", "javascript",
+    "typescript", "tsx",
+    "php", "blade",
+    "json", "yaml", "markdown", "lua"
+  },
 
   -- Install parsers synchronously (only applied to `ensure_installed`)
   sync_install = false,
@@ -29,12 +33,26 @@ require('nvim-treesitter.configs').setup({
   },
 })
 
+require 'nvim-treesitter.configs'.setup { ... }
+
+local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+parser_config.blade = {
+    install_info = {
+        url = "https://github.com/EmranMR/tree-sitter-blade",
+        files = { "src/parser.c" },
+        branch = "main",
+    },
+    filetype = "blade",
+}
+
 require('treesitter-context').setup({
   enable = true,
-})
+  max_lines = 3,
+  trim_scope = "outer"
+});
 
-vim.filetype.add({
-    pattern = {
-        [".*%.blade%.php"] = "blade",
-    },
-})
+-- vim.filetype.add({
+--   pattern = {
+--     [".*%.blade%.php"] = "blade",
+--   },
+-- })

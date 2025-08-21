@@ -31,7 +31,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         apply = true,
       })
     end, opts)
-    vim.keymap.set({"n", "v"}, "<leader>ii", function ()
+    vim.keymap.set({ "n", "v" }, "<leader>ii", function()
       vim.lsp.buf.code_action({
         context = { only = { "quickfix" } },
         apply = true,
@@ -78,6 +78,11 @@ end
 local cmp = require('cmp')
 
 cmp.setup({
+  performance = {
+    debounce = 60,        -- tempo entre inputs
+    throttle = 30,        -- limite de requisições simultâneas
+    fetching_timeout = 200, -- timeout pra fontes lentas
+  },
   snippet = {
     expand = function(args)
       -- precisa do neovim 0.10 para isso
@@ -98,6 +103,6 @@ cmp.setup({
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
-    { name = 'buffer' },
+    -- { name = 'buffer' },
   }),
 })
