@@ -4,6 +4,9 @@ vim.keymap.set('n', '<leader>ff', function()
 end, { desc = 'Telescope find files (gitignore on)' })
 vim.keymap.set('n', '<leader>fF', builtin.find_files, { desc = 'Telescope find files (gitignore off)' })
 vim.keymap.set('n', '<leader>fl', builtin.live_grep, { desc = 'Telescope live grep' })
+vim.keymap.set('n', '<leader>fL', function()
+  builtin.live_grep({ no_ignore = false })
+end, { desc = 'Telescope live grep (gitignore off)' })
 vim.keymap.set('n', '<leader>fg', builtin.git_commits, { desc = 'Telescope git commits' })
 vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
@@ -22,6 +25,9 @@ require("telescope").setup({
       hidden = true,
       no_ignore = true,
       find_command = { "rg", "--files", "--hidden", "--glob", "!.git/*" },
+    },
+    live_grep = {
+      additional_args = { '--no-ignore' }
     }
   },
   defaults = {

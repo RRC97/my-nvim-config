@@ -25,16 +25,20 @@ vim.keymap.set('n', 'ZQ', ':qa!<CR>', { desc = 'Fechar tudo sem salvar' })
 -- ZX → salva tudo e sai (como :wa | qa)
 vim.keymap.set('n', 'ZX', ':wqa<CR>', { desc = 'Salvar tudo e sair' })
 
+vim.keymap.set("n", "<leader>w", ":cclose<CR>", { desc = "Fechar quickfix" })
+
 vim.keymap.set("n", "<leader>q", function()
   -- if there are no diagnostics, do nothing or close quickfix opened
   local diagnostics = vim.diagnostic.get(0)
-  if vim.tbl_isempty(diagnostics) then
-    vim.cmd("cclose")
-  else
+  if not vim.tbl_isempty(diagnostics) then
     vim.diagnostic.setqflist({ open = false })
     vim.cmd("copen")
+    vim.cmd("wincmd p")
   end
 end, { desc = "Abrir quickfix com diagnostics" })
+
+vim.keymap.set("n", "<C-k>", "<cmd>bprev<CR>zz")
+vim.keymap.set("n", "<C-j>", "<cmd>bnext<CR>zz")
 
 vim.keymap.set("n", "<leader>k", "<cmd>cprev<CR>zz")
 vim.keymap.set("n", "<leader>j", "<cmd>cnext<CR>zz")
