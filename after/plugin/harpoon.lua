@@ -13,8 +13,8 @@ harpoon:extend(extensions.builtins.navigate_with_number());
 
 -- require("telescope").load_extension('harpoon')
 
-vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
-vim.keymap.set("n", "<leader>o", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+vim.keymap.set("n", "<leader>ha", function() harpoon:list():add() end)
+vim.keymap.set("n", "<leader>ho", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
 
 -- vim.keymap.set("n", "<leader>hc", function() harpoon:list():clear() end)
 -- vim.keymap.set("n", "<leader>h1", function() harpoon:list():select(1) end)

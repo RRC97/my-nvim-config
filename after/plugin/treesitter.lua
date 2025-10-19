@@ -31,18 +31,32 @@ require('nvim-treesitter.configs').setup({
     injected_languages = true,
     include = { node_type = { ["*"] = { "*" } } },
   },
+
+  textobjects = {
+    select = {
+      enable = true,
+      lookahead = true, -- move o cursor automaticamente pro próximo textobject
+
+      keymaps = {
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+      },
+    },
+  },
 })
 
 require 'nvim-treesitter.configs'.setup { ... }
 
 local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
 parser_config.blade = {
-    install_info = {
-        url = "https://github.com/EmranMR/tree-sitter-blade",
-        files = { "src/parser.c" },
-        branch = "main",
-    },
-    filetype = "blade",
+  install_info = {
+    url = "https://github.com/EmranMR/tree-sitter-blade",
+    files = { "src/parser.c" },
+    branch = "main",
+  },
+  filetype = "blade",
 }
 
 require('treesitter-context').setup({
