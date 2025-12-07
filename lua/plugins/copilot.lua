@@ -13,7 +13,8 @@ return {
           keymap = {
             accept = "<C-l>",
           }
-        }
+        },
+        lsp = { enabled = true },
       })
     end,
   }

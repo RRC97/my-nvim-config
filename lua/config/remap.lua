@@ -31,8 +31,7 @@ vim.keymap.set("n", "<leader>q", function()
   -- if there are no diagnostics, do nothing or close quickfix opened
   local diagnostics = vim.diagnostic.get(0)
   if not vim.tbl_isempty(diagnostics) then
-    vim.diagnostic.setqflist({ open = false })
-    vim.cmd("copen")
+    vim.diagnostic.setqflist({ open = true })
     vim.cmd("wincmd p")
   end
 end, { desc = "Abrir quickfix com diagnostics" })

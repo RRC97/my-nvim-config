@@ -22,7 +22,8 @@ local home = vim.fn.expand("~")
 vim.opt.undodir = home .. "/.vim/undodir"
 vim.opt.undofile = true
 
-vim.opt.hlsearch = false vim.opt.incsearch = true
+vim.opt.hlsearch = false
+vim.opt.incsearch = true
 
 vim.opt.termguicolors = true
 

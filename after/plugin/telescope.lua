@@ -29,8 +29,8 @@ require("telescope").setup({
       find_command = { "rg", "--files", "--hidden", "--glob", "!.git/*" },
     },
     live_grep = {
-      no_ignore = true,
-      -- additional_args = { '--no-ignore' }
+      -- no_ignore = true,
+      additional_args = { '--no-ignore' }
     }
   },
   defaults = {
