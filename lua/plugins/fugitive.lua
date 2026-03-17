@@ -8,4 +8,5 @@ return {
 		vim.g.fugitive_diff_cmd = "git difftool"
     vim.g.fuitive_git_args = { "--no-optional-locks" }
 	end,
+
 }

@@ -58,3 +58,10 @@ vim.api.nvim_create_autocmd("FileType", {
       { buffer = true, desc = "Close quickfix" })
   end,
 })
+
+local avante_enabled = true
+vim.keymap.set("n", "<leader>th", function()
+  avante_enabled = not avante_enabled
+  require("avante").setup({ hints = { enabled = avante_enabled } })
+  print("Avante hints: " .. (avante_enabled and "On" or "Off"))
+end, { desc = "Toggle Avante Hints" })

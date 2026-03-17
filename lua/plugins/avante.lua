@@ -14,12 +14,26 @@ return {
     opts = {
       -- add any opts here
       -- this file can contain specific instructions for your project
-      instructions_file = "avante.md",
+      instructions_file = "GEMINI.md",
       -- for example
-      provider = "copilot",
       selector = {
         provider = "telescope",
       },
+      web_search_engine = {
+        enable = true,
+        provider = "google",
+      },
+      provider = "gemini-cli",
+      -- providers = {},
+      -- Configuração do Autocomplete (ACP)
+      acp_providers = {
+        ["gemini-cli"] = {
+          command = "gemini",
+          args = {
+            "-y -p"
+          },
+        },
+      }
     },
     dependencies = {
       
@@ -33,7 +47,7 @@ return {
       -- "stevearc/dressing.nvim",      -- for input provider dressing
       -- "folke/snacks.nvim",           -- for input provider snacks
       -- "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-      "zbirenbaum/copilot.lua", -- for providers='copilot' ]]
+      -- "zbirenbaum/copilot.lua", -- for providers='copilot' ]]
       {
         -- support for image pasting
         "HakonHarnes/img-clip.nvim",
