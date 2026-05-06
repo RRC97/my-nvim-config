@@ -1,0 +1,2 @@
+-- Configurações globais para o context.vim se necessário
+-- Exemplo: vim.g.context_enabled = 1

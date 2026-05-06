@@ -3,7 +3,7 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
 vim.keymap.set("n", "<leader>e", function()
-  require("nvim-tree.api").tree.open({path = vim.fn.getcwd()})
+  require("nvim-tree.api").tree.open({ find_file = true })
 end)
 -- vim.keymap.set("n", "<leader><S-e>", vim.cmd.NvimTreeClose, { desc = "Toggle Nvim Tree" })
 -- vim.keymap.set("n", "<leader>b", vim.cmd.NvimTreeToggle)
@@ -90,6 +90,8 @@ end
 
 
 require("nvim-tree").setup({
+  sync_root_with_cwd = true, -- Mantém o CWD do neovim em sincronia com a árvore
+  -- respect_buf_cwd = true,    -- Respeita o CWD do buffer atual
   view = {
     number = true,
     relativenumber = true,
@@ -100,7 +102,10 @@ require("nvim-tree").setup({
     },
   },
   on_attach = on_attach,
-  update_focused_file = { enable = true },
+  update_focused_file = { 
+    enable = true,
+    update_root = false
+  },
   filters = {
     dotfiles = false,
     git_ignored = false,
@@ -111,6 +116,6 @@ require("nvim-tree").setup({
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "NvimTree" },
   callback = function()
-    vim.b.treesitter_context_disabled = true
+    vim.b.context_enabled = 0
   end,
 })
