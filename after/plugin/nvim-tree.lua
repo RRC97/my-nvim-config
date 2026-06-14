@@ -63,6 +63,14 @@ local function on_attach(bufnr)
     end
   end, opts("Open File In Tab"))
 
+  vim.keymap.set("n", "<leader>ca", function()
+    local node = api.tree.get_node_under_cursor()
+
+    if node and node.absolute_path then
+      vim.cmd("CodeCompanionChat Add " .. node.absolute_path)
+    end
+  end)
+
   vim.keymap.set("n", "<leader>a", function()
     local node = api.tree.get_node_under_cursor()
     if node and not node.nodes then -- verifica se não é diretório

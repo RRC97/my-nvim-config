@@ -1,5 +1,4 @@
 return {
-	{"nvim-treesitter/nvim-treesitter", branch = 'master', lazy = false, build = ":TSUpdate"},
-	{"nvim-treesitter/nvim-treesitter-textobjects", lazy = true},
-	{"nvim-treesitter/playground"}
+	{"nvim-treesitter/nvim-treesitter", branch = 'main', lazy = false, build = ":TSUpdate"},
+	{"nvim-treesitter/nvim-treesitter-textobjects", branch = 'main', lazy = false},
 }
